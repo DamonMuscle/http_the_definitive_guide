@@ -26,7 +26,7 @@ module.exports = function(app)
 		if (!authorization)
 		{
 			nonceArr.push(uniqueId());
-			res.set("WWW-Authenticate", `Digest realm="${realm}" qop="auth" nonce="${nonceArr.last()}"`);
+			res.set("WWW-Authenticate", `Digest realm="${realm}", qop="auth", nonce="${nonceArr.last()}"`);
 			res.status(401).send("Authorization Required!");
 		}
 		else
@@ -61,7 +61,7 @@ module.exports = function(app)
 				nonceArr.push(uniqueId());
 				var rspauth = generateRspauth(paramters);
 
-				res.set("Authentication-Info", `nextnonce="${nonceArr.last()}" rspauth="${rspauth}" qop="${values.qop}" cnonce="${values.cnonce}" nc="${values.nc}"`);
+				res.set("Authentication-Info", `nextnonce="${nonceArr.last()}", qop=${values.qop}, rspauth="${rspauth}", cnonce="${values.cnonce}", nc=${values.nc}`);
 				res.send(`welcome ${values.username}. Current time is ${new Date().toString()}`);
 			}
 			else
