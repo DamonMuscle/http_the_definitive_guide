@@ -11,7 +11,7 @@ utils.checkPort(80).then(function(valid)
 		res.sendFile(path.join(__dirname, "favicon.ico"));
 	})
 	// var registerRoute = require("./src/chapter03/status_301/worker");
-	var registerRoute = require("./src/chapter11/basic-authenticate");
+	// var registerRoute = require("./src/chapter12/basic-authenticate");
 
 	var registerRoute = require("./src/chapter11/cookie");
 	registerRoute(app);
