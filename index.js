@@ -12,8 +12,9 @@ utils.checkPort(80).then(function(valid)
 	})
 	// var registerRoute = require("./src/chapter03/status_301/worker");
 	// var registerRoute = require("./src/chapter12/basic-authenticate");
+	// var registerRoute = require("./src/chapter11/cookie");
 
-	var registerRoute = require("./src/chapter11/cookie");
+	var registerRoute = require("./src/chapter13/digest-authentication");
 	registerRoute(app);
 
 	app.listen(app.get("port"), () =>
