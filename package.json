@@ -1,14 +1,15 @@
 {
-  "name": "http-the_definitive_guide",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "damon",
-  "license": "MIT",
-  "dependencies": {
-    "express": "^4.17.0"
-  }
+	"name": "http-the_definitive_guide",
+	"version": "1.0.0",
+	"description": "",
+	"main": "index.js",
+	"scripts": {
+		"start": "node index.js",
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"author": "damon",
+	"license": "MIT",
+	"dependencies": {
+		"express": "^4.17.0"
+	}
 }
