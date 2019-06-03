@@ -32,9 +32,6 @@
 			axios.get("/publickey").then(function(response)
 			{
 				var f = document.createDocumentFragment();
-				var info = document.createElement("strong");
-				info.innerText = "Typically, the public key should be fetched from credential service supplier.";
-				f.appendChild(info);
 				var p = document.createElement("p")
 				p.innerText = response.data;
 				f.appendChild(p);
@@ -60,6 +57,14 @@
 				"encrypted": encrypted
 			}).then(function(response)
 			{
+				Array.from((e.target || e.currentTarget).parentElement.children).forEach(function(element)
+				{
+					if (["p", "strong"].includes(element.tagName.toLowerCase()))
+					{
+						element.remove();
+					}
+				});
+
 				var { plainText, sign } = response.data;
 				var result = key.verify(encrypted, sign, undefined, "base64");
 

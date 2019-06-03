@@ -22,7 +22,6 @@ module.exports = function(app)
 
 	app.get("/publickey", function(req, res)
 	{
-		//typically, the public key should be fetched from credential service supplier
 		res.send(fs.readFileSync(path.join(process.cwd(), "public.key")));
 	});
 
