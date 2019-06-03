@@ -1,4 +1,7 @@
 var net = require('net');
+var fs = require("fs");
+var path = require("path");
+var NodeRSA = require("node-rsa");
 
 module.exports = {
 	checkPort: function(port)
@@ -15,11 +18,21 @@ module.exports = {
 
 			server.on('error', function(err)
 			{
-				if (err.code === 'EADDRINUSE')
-				{
-					resolve(false);
-				}
+				resolve(false);
 			})
+		});
+	},
+	generateSSLKeys: function()
+	{
+		return new Promise(function(resolve)
+		{
+			var key = new NodeRSA();
+			key.generateKeyPair();
+
+			fs.writeFileSync(path.join(process.cwd(), "private.key"), key.exportKey("private"));
+			fs.writeFileSync(path.join(process.cwd(), "public.key"), key.exportKey("public"));
+
+			resolve();
 		});
 	}
 }

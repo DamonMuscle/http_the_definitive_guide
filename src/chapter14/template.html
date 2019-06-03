@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<link rel="icon" href="data:;base64,=">
+	<style>
+		div:first-child {
+			padding-bottom: 15px;
+		}
+
+		strong {
+			margin-top: 10px;
+			display: block;
+		}
+	</style>
+</head>
+
+<body>
+	<div>
+		<button id="public">get public key</button>
+	</div>
+	<div>
+		<input type="text" />
+		<button id="send">send message and validate server</button>
+		<p></p>
+	</div>
+	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+	<script src="/https-bundle.js"></script>
+	<script>
+		document.getElementById("public").addEventListener("click", function(e)
+		{
+			axios.get("/publickey").then(function(response)
+			{
+				var f = document.createDocumentFragment();
+				var info = document.createElement("strong");
+				info.innerText = "Typically, the public key should be fetched from credential service supplier.";
+				f.appendChild(info);
+				var p = document.createElement("p")
+				p.innerText = response.data;
+				f.appendChild(p);
+
+				(e.target || e.currentTarget).parentElement.appendChild(f);
+
+				window.public_key = response.data;
+			});
+		});
+
+		document.getElementById("send").addEventListener("click", function(e)
+		{
+			var input = document.querySelector("input");
+			if (!input.value)
+			{
+				alert("input some value");
+				return;
+			}
+			var key = new NodeRSA(window.public_key);
+			var encrypted = key.encrypt(input.value, 'base64');
+
+			axios.post("/validate", {
+				"encrypted": encrypted
+			}).then(function(response)
+			{
+				var { plainText, sign } = response.data;
+				var result = key.verify(encrypted, sign, undefined, "base64");
+
+				var f = document.createDocumentFragment();
+				var p = document.createElement("p");
+				p.innerText = `${plainText}
+
+				${result ? "the right server" : "the fake server"}.`;
+				f.appendChild(p);
+				var info = document.createElement("strong");
+				info.innerText = `the subsequent reuqest could take "${input.value}" as the secret key of symmetrical encryption to imporve performance.`;
+				f.appendChild(info);
+
+				(e.target || e.currentTarget).parentElement.appendChild(f);
+			});
+		});
+	</script>
+</body>
+
+</html>
