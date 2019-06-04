@@ -2,6 +2,7 @@ var fs = require("fs");
 var NodeRSA = require('node-rsa');
 var path = require("path");
 var shell = require("shelljs");
+var storage = [];
 
 module.exports = function(app)
 {
@@ -31,9 +32,17 @@ module.exports = function(app)
 		var privatekey = fs.readFileSync(path.join(process.cwd(), "private.key"));
 		var key = new NodeRSA(privatekey);
 
+		storage.push(key.decrypt(encrypted));
+
+		var encryptedText = key.encryptPrivate(` I'm the server!, The message you sent can work as the key of symmetrical encryption.`, "base64");
 		res.json({
-			plainText: `your message is: ${key.decrypt(encrypted)}. I'm the server!`,
-			sign: key.sign(encrypted, "base64")
+			plainText: encryptedText,
+			sign: key.sign(encryptedText, "base64")
 		});
+	});
+
+	app.post("/realrequest", function(req, res)
+	{
+
 	});
 }

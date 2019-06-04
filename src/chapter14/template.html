@@ -66,17 +66,26 @@
 				});
 
 				var { plainText, sign } = response.data;
-				var result = key.verify(encrypted, sign, undefined, "base64");
+				var result = key.verify(plainText, sign, undefined, "base64");
 
 				var f = document.createDocumentFragment();
 				var p = document.createElement("p");
-				p.innerText = `${plainText}
+				p.innerText = `${key.decryptPublic(plainText, "utf8")};
 
 				${result ? "the right server" : "the fake server"}.`;
 				f.appendChild(p);
 				var info = document.createElement("strong");
 				info.innerText = `the subsequent reuqest could take "${input.value}" as the secret key of symmetrical encryption to imporve performance.`;
 				f.appendChild(info);
+
+				var note = document.createElement("strong");
+				note.style.color = "#b90d0d";
+				note.innerText = `Note:
+								The message client sends to server will be decrypted by the private key in the server only.
+								The response from server will be decrypted by any client who has the public key.
+								So we can not use private key to encrypt message, but sign message!
+								The message client sent to server what is only specific client and server.`;
+				f.appendChild(note);
 
 				(e.target || e.currentTarget).parentElement.appendChild(f);
 			});
