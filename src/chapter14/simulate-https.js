@@ -34,7 +34,7 @@ module.exports = function(app)
 
 		storage.push(key.decrypt(encrypted));
 
-		var encryptedText = key.encryptPrivate(` I'm the server!, The message you sent can work as the key of symmetrical encryption.`, "base64");
+		var encryptedText = key.encryptPrivate(`I'm the server! The message you sent can work as the key of symmetrical encryption.`, "base64");
 		res.json({
 			plainText: encryptedText,
 			sign: key.sign(encryptedText, "base64")

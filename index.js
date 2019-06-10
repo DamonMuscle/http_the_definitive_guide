@@ -20,8 +20,9 @@ Promise.all([
 	// var registerRoute = require("./src/chapter12/basic-authenticate");
 	// var registerRoute = require("./src/chapter11/cookie");
 	// var registerRoute = require("./src/chapter13/digest-authentication");
+	// var registerRoute = require("./src/chapter14/simulate-https");
 
-	var registerRoute = require("./src/chapter14/simulate-https");
+	var registerRoute = require("./src/chapter16/character-set-encoding");
 
 	registerRoute(app);
 
