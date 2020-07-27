@@ -5,3 +5,4 @@ package-lock.json
 private.key
 public.key
 https-bundle.js
+.history
